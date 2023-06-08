@@ -30,7 +30,7 @@ describe("Register use case", () => {
 
     const isPasswordCorrectlyHashed = await compare(
       "123456",
-      user.password_hash
+      user.password_hash  
     );
 
     expect(isPasswordCorrectlyHashed).toBe(true);
@@ -48,7 +48,7 @@ describe("Register use case", () => {
       password: "123456",
     });
 
-    expect(() =>
+    await expect(() =>
       registerUseCase.execute({
         email,
         name: "John Doe",
