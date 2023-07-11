@@ -1,8 +1,10 @@
 import { Gym, Prisma } from "@prisma/client";
-import { GymsRepository } from "../prisma/gyms-repository";
+import { GymsRepository, fecthManyNearbyParams } from "../prisma/gyms-repository";
 import { randomUUID } from "node:crypto";
+import { getDistanceBetweenCoordinates } from "@/utils/get-distance-between-coordinates";
 
 export class InMemoryGymsRepository implements GymsRepository {
+
 
   public gyms: Gym[] = [];
 
@@ -37,5 +39,14 @@ export class InMemoryGymsRepository implements GymsRepository {
       .splice((page - 1) * 20, page * 20)
 
     return gym
+  }
+
+  async fecthManyNearby(params: fecthManyNearbyParams) {
+    return this.gyms.filter(gym => {
+      const distance = getDistanceBetweenCoordinates({
+        latitude: params.latitude, longitude: params.longitude
+      }, { latitude: gym.latitude.toNumber(), longitude: gym.longitude.toNumber() })
+      return distance < 10
+    })
   }
 }
