@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 
 
 interface ValidateCheckInUseCaseRequest {
-  gymId: string
+  checkInId: string
 }
 
 interface ValidateCheckInUseCaseResponse {
@@ -17,9 +17,9 @@ interface ValidateCheckInUseCaseResponse {
 export class ValidateCheckInUseCase {
   constructor(private checkInsRepository: CheckInsRepository) { }
 
-  async execute({ gymId }: ValidateCheckInUseCaseRequest): Promise<ValidateCheckInUseCaseResponse> {
+  async execute({ checkInId }: ValidateCheckInUseCaseRequest): Promise<ValidateCheckInUseCaseResponse> {
 
-    const checkIn = await this.checkInsRepository.findById(gymId)
+    const checkIn = await this.checkInsRepository.findById(checkInId)
 
     if (!checkIn) {
       throw new ResourceNotFoundError()

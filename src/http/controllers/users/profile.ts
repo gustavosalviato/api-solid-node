@@ -5,7 +5,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify()
 
-  const getUserProfile = await MakeGetUseProfileUseCase()
+  const getUserProfile = MakeGetUseProfileUseCase()
 
   const { user } = await getUserProfile.execute({
     userId: request.user.sub
